@@ -13,6 +13,7 @@ A modern Single Page Application (SPA) built with React 19, Vite, and TypeScript
 
 - **React 19** with TypeScript for type-safe development
 - **Vite** for lightning-fast builds and HMR
+- **Path Aliases**: `@/` resolves to `src/` for cleaner imports
 - **Dynamic CSS Themes**: Standard, sepia, and ocean themes with light/medium/dark variants, selectable via UI or auto-detected from `prefers-color-scheme`
 - **SCSS/Sass**: Preprocessed styles with mixins and loops for efficient theme management
 - **Storybook**: Interactive component development environment with theme toolbar
@@ -109,12 +110,17 @@ The app is automatically deployed to GitHub Pages on pushes to the `main` branch
 
 ```
 src/
+├── styles/
+│   ├── themes.scss      # Theme variables, maps, and mixins
+│   ├── base.scss        # Base styles (:root, body, typography, links)
+│   ├── components.scss  # Component styles (buttons, cards, selectors)
+│   └── index.scss       # Main SCSS entry point importing all modules
 ├── components/
 │   ├── App/
 │   │   ├── App.tsx          # Main component with theme selector
 │   │   └── App.test.tsx     # Tests for App component
 │   └── index.ts             # Component exports
-├── index.scss               # Global SCSS styles with theme definitions
+├── index.scss               # Global SCSS styles (imports from styles/)
 ├── main.tsx                 # App entry point
 ├── main.test.tsx            # Tests for main entry
 ├── test/
@@ -158,7 +164,7 @@ LICENSE                      # MIT License
 2. Import in `App.tsx`:
 
    ```tsx
-   import NewComponent from './NewComponent';
+   import NewComponent from '@/components/NewComponent';
    ```
 
 3. Add test in `src/NewComponent.test.tsx`:

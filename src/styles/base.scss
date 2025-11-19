@@ -1,0 +1,84 @@
+@use 'themes';
+
+// Podstawowe style dla :root
+:root {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  // Domyślny motyw (dark)
+  @include themes.set-theme(standard, dark);
+
+  color: var(--app-text-primary);
+  background-color: var(--app-bg-primary);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Preferencja systemowa dla jasnego motywu
+@media (prefers-color-scheme: light) {
+  :root {
+    @include themes.set-theme(standard, light);
+  }
+}
+
+// Dynamiczne motywy - POPRAWIONA składnia bez spacji
+@each $theme-name, $variants in themes.$themes {
+  @each $variant, $colors in $variants {
+    :root[data-theme='#{$theme-name}-#{$variant}'] {
+      @include themes.set-theme($theme-name, $variant);
+    }
+  }
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--app-bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+// Layout
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+// Typografia
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: var(--app-heading);
+  margin: 0.5em 0;
+}
+
+// Linki
+a {
+  font-weight: 500;
+  color: var(--app-accent-primary);
+  text-decoration: none;
+  transition: color 0.25s ease;
+
+  &:hover {
+    color: var(--app-accent-hover);
+  }
+
+  &:active {
+    color: var(--app-accent-active);
+  }
+}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import reactLogo from '../../assets/react.svg';
+import reactLogo from '@/assets/react.svg';
 import viteLogo from '/vite.svg';
 
 declare const __APP_VERSION__: string;

@@ -1,7 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.scss';
-import App from './components/App';
+import '@/styles/index.scss';
+import App from '@/components/App';
+
+if (!document.getElementById('root')) {
+  const rootDiv = document.createElement('div');
+  rootDiv.id = 'root';
+  document.body.appendChild(rootDiv);
+  console.log('Root element not found. Created a new one.');
+}
 
 /**
  * Application entry point.

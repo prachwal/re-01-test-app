@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import '../src/index.scss';
+import '@/styles/index.scss';
 
 type ThemeVariant = 'light' | 'medium' | 'dark';
 type ThemeName = 'standard' | 'nature' | 'sunset' | 'ocean';
