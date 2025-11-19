@@ -4,7 +4,13 @@ import viteLogo from '/vite.svg';
 import './App.css';
 
 declare const __APP_VERSION__: string;
+declare const __HAS_DOCS__: boolean;
+declare const __HAS_COVERAGE__: boolean;
 
+/**
+ * Main application component.
+ * Displays a counter with increment functionality and links to Vite and React documentation.
+ */
 function App() {
   const [count, setCount] = useState(0);
 
@@ -29,6 +35,30 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
+        {__HAS_DOCS__ && (
+          <>
+            {' | '}
+            <a
+              href={`${import.meta.env.BASE_URL}docs/index.html`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Documentation
+            </a>
+          </>
+        )}
+        {__HAS_COVERAGE__ && (
+          <>
+            {' | '}
+            <a
+              href={`${import.meta.env.BASE_URL}coverage/index.html`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Coverage
+            </a>
+          </>
+        )}
       </p>
     </>
   );

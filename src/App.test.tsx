@@ -21,7 +21,9 @@ describe('App', () => {
   it('renders read the docs text', () => {
     render(<App />);
     expect(
-      screen.getByText('Click on the Vite and React logos to learn more')
+      screen.getByText((content) =>
+        content.includes('Click on the Vite and React logos to learn more')
+      )
     ).toBeInTheDocument();
   });
 });
