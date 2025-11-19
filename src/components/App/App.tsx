@@ -39,6 +39,32 @@ function App() {
     localStorage.setItem('app-theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    // Obserwuj zmiany atrybutu data-theme na elemencie HTML
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'data-theme'
+        ) {
+          const newTheme = document.documentElement.getAttribute(
+            'data-theme'
+          ) as ThemeValue;
+          if (newTheme && newTheme !== theme) {
+            setTheme(newTheme);
+          }
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    return () => observer.disconnect();
+  }, [theme]);
+
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTheme = event.target.value as ThemeValue;
     setTheme(selectedTheme);

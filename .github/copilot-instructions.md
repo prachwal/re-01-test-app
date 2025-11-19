@@ -38,6 +38,12 @@ Project uses Vite for fast development (HMR) and build optimization. Base path s
 
 Focus on maintaining 100% test coverage for components. Use TypeScript strictly for type safety.
 
+## TypeScript Guidelines
+
+- **Avoid `any` type**: Never use `any` in TypeScript code. Instead, use proper types, unions, or generics. If a type is unknown, use `unknown` or define a specific interface.
+- Prefer explicit types over implicit `any`.
+- Use strict mode for TypeScript compilation.
+
 ## Development Tips
 
 - When running `npm run dev` in the background to test endpoints or perform curls, ensure the process remains active. Do not interrupt the dev server before executing subsequent commands like curl, as it will cause connection failures.
