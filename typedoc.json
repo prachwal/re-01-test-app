@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["src/main.tsx", "src/App.tsx"],
+  "entryPoints": ["src/main.tsx", "src/components/App/App.tsx"],
   "out": "public/docs",
   "exclude": ["src/**/*.test.*", "src/**/*.spec.*", "src/test/**"],
   "includeVersion": true,
