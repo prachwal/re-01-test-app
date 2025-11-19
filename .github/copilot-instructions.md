@@ -10,6 +10,13 @@ This is a simple Single Page Application (SPA) built with React 19, Vite, and Ty
 
 Project uses Vite for fast development (HMR) and build optimization. Base path set to `/re-01-test-app/` for GitHub Pages deployment.
 
+## Separation of Concerns
+
+- **Presentation vs Logic**: Komponenty skupiają się na prezentacji (JSX), logika biznesowa jest wyodrębniona do custom hooks w osobnych plikach.
+- **Types**: Typy TypeScript są definiowane w dedykowanych plikach `types.ts` dla lepszej organizacji i reużywalności.
+- **Hooks**: Custom hooks (np. `useCounter`, `useTheme`) zawierają stan, efekty i handler'y, umożliwiając testowanie logiki niezależnie od komponentów.
+- **Przykład**: W `App.tsx` użyto `useCounter` i `useTheme` z `logic.ts`, typy importowane z `types.ts`. Komponent renderuje tylko UI, bez logiki stanu.
+
 ## Critical Workflows
 
 - **Development**: `npm run dev` starts Vite dev server with HMR.

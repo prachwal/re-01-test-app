@@ -118,8 +118,10 @@ src/
 │   └── index.scss           # Main SCSS entry point importing all modules
 ├── components/
 │   ├── App/
-│   │   ├── App.tsx          # Main component with theme selector
-│   │   └── App.test.tsx     # Tests for App component
+│   │   ├── App.tsx          # Main component (presentation only, uses hooks from logic.ts)
+│   │   ├── logic.ts         # Custom hooks (useCounter, useTheme) for business logic
+│   │   ├── types.ts         # TypeScript types (ThemeValue, etc.)
+│   │   └── App.test.tsx     # Tests for App component and hooks
 │   └── index.ts             # Component exports
 ├── index.scss               # Global SCSS styles (imports from styles/)
 ├── main.tsx                 # App entry point

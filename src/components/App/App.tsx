@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCounter, useTheme } from './logic';
 import reactLogo from '@/assets/react.svg';
 import viteLogo from '/vite.svg';
 
@@ -7,68 +7,13 @@ declare const __HAS_DOCS__: boolean;
 declare const __HAS_COVERAGE__: boolean;
 declare const __HAS_STORYBOOK__: boolean;
 
-type ThemeVariant = 'light' | 'medium' | 'dark';
-type ThemeName = 'standard' | 'nature' | 'sunset' | 'ocean';
-type ThemeValue = `${ThemeName}-${ThemeVariant}`;
-
 /**
  * Main application component.
  * Displays a counter with increment functionality and links to Vite and React documentation.
  */
 function App() {
-  const [count, setCount] = useState(0);
-  const [theme, setTheme] = useState<ThemeValue>(() => {
-    // Sprawdź zapisany motyw w localStorage
-    const savedTheme = localStorage.getItem('app-theme') as ThemeValue | null;
-    if (savedTheme) {
-      return savedTheme;
-    }
-
-    // Sprawdź preferencję systemową
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
-    return prefersDark ? 'standard-dark' : 'standard-light';
-  });
-
-  useEffect(() => {
-    // Ustaw atrybut data-theme na elemencie HTML
-    document.documentElement.setAttribute('data-theme', theme);
-
-    // Zapisz wybrany motyw w localStorage
-    localStorage.setItem('app-theme', theme);
-  }, [theme]);
-
-  useEffect(() => {
-    // Obserwuj zmiany atrybutu data-theme na elemencie HTML
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'data-theme'
-        ) {
-          const newTheme = document.documentElement.getAttribute(
-            'data-theme'
-          ) as ThemeValue;
-          if (newTheme && newTheme !== theme) {
-            setTheme(newTheme);
-          }
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-
-    return () => observer.disconnect();
-  }, [theme]);
-
-  const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTheme = event.target.value as ThemeValue;
-    setTheme(selectedTheme);
-  };
+  const { count, setCount } = useCounter(0);
+  const { theme, handleThemeChange } = useTheme();
 
   return (
     <>
