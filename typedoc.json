@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["src/main.tsx", "src/App.tsx"],
+  "out": "public/docs",
+  "exclude": ["src/**/*.test.*", "src/**/*.spec.*", "src/test/**"],
+  "includeVersion": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "hideGenerator": true
+}

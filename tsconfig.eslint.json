@@ -5,6 +5,8 @@
     "vitest.config.ts",
     "eslint.config.js",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
   ]
 }

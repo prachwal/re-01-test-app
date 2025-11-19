@@ -25,3 +25,6 @@ dist-ssr
 
 junit.xml
 coverage/
+docs/
+storybook/
+*.tsbuildinfo
