@@ -7,9 +7,17 @@ import fs from 'fs';
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/re-01-test-app/' : '/',
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // additionalData: `@import "src/variables.scss";`,
+      },
+    },
+  },
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
     __HAS_DOCS__: JSON.stringify(fs.existsSync('./public/docs')),
     __HAS_COVERAGE__: JSON.stringify(fs.existsSync('./public/coverage')),
+    __HAS_STORYBOOK__: JSON.stringify(fs.existsSync('./public/storybook')),
   },
 });

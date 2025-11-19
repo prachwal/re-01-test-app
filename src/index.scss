@@ -1,0 +1,458 @@
+@use 'sass:map';
+
+// Ulepszona paleta kolorów z lepszym kontrastem i spójnością
+$themes: (
+  standard: (
+    light: (
+      text-primary: #1a202c,
+      text-secondary: #4a5568,
+      bg-primary: #ffffff,
+      bg-secondary: #f7fafc,
+      bg-elevated: #edf2f7,
+      button-bg: #e2e8f0,
+      button-bg-hover: #cbd5e0,
+      button-text: #2d3748,
+      accent-primary: #4299e1,
+      accent-hover: #3182ce,
+      accent-active: #2c5282,
+      heading: #1a202c,
+      border: #e2e8f0,
+      shadow: rgba(0, 0, 0, 0.1),
+      logo-glow: rgba(66, 153, 225, 0.4),
+      react-glow: rgba(97, 218, 251, 0.4),
+    ),
+    medium: (
+      text-primary: #e2e8f0,
+      text-secondary: #a0aec0,
+      bg-primary: #2d3748,
+      bg-secondary: #1a202c,
+      bg-elevated: #4a5568,
+      button-bg: #4a5568,
+      button-bg-hover: #718096,
+      button-text: #f7fafc,
+      accent-primary: #63b3ed,
+      accent-hover: #4299e1,
+      accent-active: #3182ce,
+      heading: #f7fafc,
+      border: #4a5568,
+      shadow: rgba(0, 0, 0, 0.3),
+      logo-glow: rgba(99, 179, 237, 0.5),
+      react-glow: rgba(97, 218, 251, 0.5),
+    ),
+    dark: (
+      text-primary: rgba(255, 255, 255, 0.92),
+      text-secondary: rgba(255, 255, 255, 0.65),
+      bg-primary: #0f1419,
+      bg-secondary: #1a1f2e,
+      bg-elevated: #252b3b,
+      button-bg: #1e2433,
+      button-bg-hover: #2d3548,
+      button-text: #ffffff,
+      accent-primary: #60a5fa,
+      accent-hover: #3b82f6,
+      accent-active: #2563eb,
+      heading: #ffffff,
+      border: #374151,
+      shadow: rgba(0, 0, 0, 0.5),
+      logo-glow: rgba(96, 165, 250, 0.6),
+      react-glow: rgba(97, 218, 251, 0.6),
+    ),
+  ),
+  nature: (
+    light: (
+      text-primary: #1b4332,
+      text-secondary: #2d6a4f,
+      bg-primary: #f1faee,
+      bg-secondary: #e8f5e9,
+      bg-elevated: #d8f3dc,
+      button-bg: #b7e4c7,
+      button-bg-hover: #95d5b2,
+      button-text: #1b4332,
+      accent-primary: #52b788,
+      accent-hover: #40916c,
+      accent-active: #2d6a4f,
+      heading: #081c15,
+      border: #b7e4c7,
+      shadow: rgba(27, 67, 50, 0.1),
+      logo-glow: rgba(82, 183, 136, 0.4),
+      react-glow: rgba(64, 145, 108, 0.4),
+    ),
+    medium: (
+      text-primary: #d8f3dc,
+      text-secondary: #b7e4c7,
+      bg-primary: #2d6a4f,
+      bg-secondary: #1b4332,
+      bg-elevated: #40916c,
+      button-bg: #52b788,
+      button-bg-hover: #74c69d,
+      button-text: #081c15,
+      accent-primary: #95d5b2,
+      accent-hover: #b7e4c7,
+      accent-active: #d8f3dc,
+      heading: #f1faee,
+      border: #40916c,
+      shadow: rgba(0, 0, 0, 0.3),
+      logo-glow: rgba(149, 213, 178, 0.5),
+      react-glow: rgba(183, 228, 199, 0.5),
+    ),
+    dark: (
+      text-primary: #d8f3dc,
+      text-secondary: #95d5b2,
+      bg-primary: #081c15,
+      bg-secondary: #1b4332,
+      bg-elevated: #2d6a4f,
+      button-bg: #1b4332,
+      button-bg-hover: #2d6a4f,
+      button-text: #d8f3dc,
+      accent-primary: #74c69d,
+      accent-hover: #52b788,
+      accent-active: #40916c,
+      heading: #f1faee,
+      border: #2d6a4f,
+      shadow: rgba(0, 0, 0, 0.5),
+      logo-glow: rgba(116, 198, 157, 0.6),
+      react-glow: rgba(82, 183, 136, 0.6),
+    ),
+  ),
+  sunset: (
+    light: (
+      text-primary: #7c2d12,
+      text-secondary: #9a3412,
+      bg-primary: #fff7ed,
+      bg-secondary: #ffedd5,
+      bg-elevated: #fed7aa,
+      button-bg: #fdba74,
+      button-bg-hover: #fb923c,
+      button-text: #7c2d12,
+      accent-primary: #f97316,
+      accent-hover: #ea580c,
+      accent-active: #c2410c,
+      heading: #431407,
+      border: #fed7aa,
+      shadow: rgba(124, 45, 18, 0.1),
+      logo-glow: rgba(249, 115, 22, 0.4),
+      react-glow: rgba(251, 146, 60, 0.4),
+    ),
+    medium: (
+      text-primary: #ffedd5,
+      text-secondary: #fed7aa,
+      bg-primary: #9a3412,
+      bg-secondary: #7c2d12,
+      bg-elevated: #c2410c,
+      button-bg: #ea580c,
+      button-bg-hover: #f97316,
+      button-text: #fff7ed,
+      accent-primary: #fb923c,
+      accent-hover: #fdba74,
+      accent-active: #fcd34d,
+      heading: #fff7ed,
+      border: #c2410c,
+      shadow: rgba(0, 0, 0, 0.3),
+      logo-glow: rgba(251, 146, 60, 0.5),
+      react-glow: rgba(253, 186, 116, 0.5),
+    ),
+    dark: (
+      text-primary: #fed7aa,
+      text-secondary: #fdba74,
+      bg-primary: #431407,
+      bg-secondary: #7c2d12,
+      bg-elevated: #9a3412,
+      button-bg: #7c2d12,
+      button-bg-hover: #9a3412,
+      button-text: #ffedd5,
+      accent-primary: #fb923c,
+      accent-hover: #f97316,
+      accent-active: #ea580c,
+      heading: #fff7ed,
+      border: #9a3412,
+      shadow: rgba(0, 0, 0, 0.5),
+      logo-glow: rgba(251, 146, 60, 0.6),
+      react-glow: rgba(253, 186, 116, 0.6),
+    ),
+  ),
+  ocean: (
+    light: (
+      text-primary: #0c4a6e,
+      text-secondary: #075985,
+      bg-primary: #f0f9ff,
+      bg-secondary: #e0f2fe,
+      bg-elevated: #bae6fd,
+      button-bg: #7dd3fc,
+      button-bg-hover: #38bdf8,
+      button-text: #0c4a6e,
+      accent-primary: #0ea5e9,
+      accent-hover: #0284c7,
+      accent-active: #0369a1,
+      heading: #082f49,
+      border: #bae6fd,
+      shadow: rgba(12, 74, 110, 0.1),
+      logo-glow: rgba(14, 165, 233, 0.4),
+      react-glow: rgba(56, 189, 248, 0.4),
+    ),
+    medium: (
+      text-primary: #e0f2fe,
+      text-secondary: #bae6fd,
+      bg-primary: #075985,
+      bg-secondary: #0c4a6e,
+      bg-elevated: #0284c7,
+      button-bg: #0ea5e9,
+      button-bg-hover: #38bdf8,
+      button-text: #f0f9ff,
+      accent-primary: #7dd3fc,
+      accent-hover: #bae6fd,
+      accent-active: #e0f2fe,
+      heading: #f0f9ff,
+      border: #0284c7,
+      shadow: rgba(0, 0, 0, 0.3),
+      logo-glow: rgba(125, 211, 252, 0.5),
+      react-glow: rgba(186, 230, 253, 0.5),
+    ),
+    dark: (
+      text-primary: #bae6fd,
+      text-secondary: #7dd3fc,
+      bg-primary: #082f49,
+      bg-secondary: #0c4a6e,
+      bg-elevated: #075985,
+      button-bg: #0c4a6e,
+      button-bg-hover: #075985,
+      button-text: #e0f2fe,
+      accent-primary: #38bdf8,
+      accent-hover: #0ea5e9,
+      accent-active: #0284c7,
+      heading: #f0f9ff,
+      border: #075985,
+      shadow: rgba(0, 0, 0, 0.5),
+      logo-glow: rgba(56, 189, 248, 0.6),
+      react-glow: rgba(125, 211, 252, 0.6),
+    ),
+  ),
+);
+
+// Mixin do ustawiania zmiennych motywu z prefixem
+@mixin set-theme($theme-name, $variant) {
+  $theme-colors: map.get(map.get($themes, $theme-name), $variant);
+
+  --app-text-primary: #{map.get($theme-colors, text-primary)};
+  --app-text-secondary: #{map.get($theme-colors, text-secondary)};
+  --app-bg-primary: #{map.get($theme-colors, bg-primary)};
+  --app-bg-secondary: #{map.get($theme-colors, bg-secondary)};
+  --app-bg-elevated: #{map.get($theme-colors, bg-elevated)};
+  --app-button-bg: #{map.get($theme-colors, button-bg)};
+  --app-button-bg-hover: #{map.get($theme-colors, button-bg-hover)};
+  --app-button-text: #{map.get($theme-colors, button-text)};
+  --app-accent-primary: #{map.get($theme-colors, accent-primary)};
+  --app-accent-hover: #{map.get($theme-colors, accent-hover)};
+  --app-accent-active: #{map.get($theme-colors, accent-active)};
+  --app-heading: #{map.get($theme-colors, heading)};
+  --app-border: #{map.get($theme-colors, border)};
+  --app-shadow: #{map.get($theme-colors, shadow)};
+  --app-logo-glow: #{map.get($theme-colors, logo-glow)};
+  --app-react-glow: #{map.get($theme-colors, react-glow)};
+}
+
+// Podstawowe style dla :root
+:root {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  // Domyślny motyw (dark)
+  @include set-theme(standard, dark);
+
+  color: var(--app-text-primary);
+  background-color: var(--app-bg-primary);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Preferencja systemowa dla jasnego motywu
+@media (prefers-color-scheme: light) {
+  :root {
+    @include set-theme(standard, light);
+  }
+}
+
+// Dynamiczne motywy - POPRAWIONA składnia bez spacji
+@each $theme-name, $variants in $themes {
+  @each $variant, $colors in $variants {
+    :root[data-theme='#{$theme-name}-#{$variant}'] {
+      @include set-theme($theme-name, $variant);
+    }
+  }
+}
+
+// Layout
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--app-bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+// Typografia
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: var(--app-heading);
+  margin: 0.5em 0;
+}
+
+// Linki
+a {
+  font-weight: 500;
+  color: var(--app-accent-primary);
+  text-decoration: none;
+  transition: color 0.25s ease;
+
+  &:hover {
+    color: var(--app-accent-hover);
+  }
+
+  &:active {
+    color: var(--app-accent-active);
+  }
+}
+
+// Przyciski
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--app-button-bg);
+  color: var(--app-button-text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background-color: var(--app-button-bg-hover);
+    border-color: var(--app-accent-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--app-accent-primary);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// Logo
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms ease;
+
+  &:hover {
+    filter: drop-shadow(0 0 2em var(--app-logo-glow));
+  }
+
+  &.react:hover {
+    filter: drop-shadow(0 0 2em var(--app-react-glow));
+  }
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+// Karty
+.card {
+  padding: 2em;
+  background-color: var(--app-bg-secondary);
+  border-radius: 12px;
+  margin: 2em auto;
+  box-shadow: 0 4px 6px var(--app-shadow);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 12px var(--app-shadow);
+    transform: translateY(-2px);
+  }
+
+  code {
+    background-color: var(--app-bg-elevated);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+  }
+}
+
+// Selektor motywu
+.theme-selector {
+  margin: 2em 0;
+  padding: 1.5em;
+  background-color: var(--app-bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--app-border);
+
+  label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 500;
+    color: var(--app-text-primary);
+  }
+
+  select {
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    border: 1px solid var(--app-border);
+    background-color: var(--app-bg-elevated);
+    color: var(--app-text-primary);
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: var(--app-accent-primary);
+    }
+
+    &:focus {
+      outline: 2px solid var(--app-accent-primary);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Stopka
+.read-the-docs {
+  color: var(--app-text-secondary);
+  margin-top: 2em;
+  font-size: 0.9em;
+}

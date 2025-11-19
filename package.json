@@ -11,7 +11,9 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "docs": "typedoc",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build --output-dir public/storybook"
   },
   "dependencies": {
     "npm-check-updates": "^19.1.2",
@@ -20,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@storybook/react-vite": "^10.0.8",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^24.10.1",
@@ -37,6 +40,7 @@
     "globals": "^16.5.0",
     "jsdom": "^27.2.0",
     "prettier": "^3.6.2",
+    "sass": "^1.94.1",
     "typedoc": "^0.28.14",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.47.0",
