@@ -1,5 +1,29 @@
 import type { Preview } from '@storybook/react';
+import React from 'react';
 import '../src/index.scss';
+
+type ThemeVariant = 'light' | 'medium' | 'dark';
+type ThemeName = 'standard' | 'nature' | 'sunset' | 'ocean';
+type ThemeValue = `${ThemeName}-${ThemeVariant}`;
+
+const themeOptions: { value: ThemeValue; title: string; icon: string }[] = [
+  // Standard
+  { value: 'standard-light', title: 'Standard Light', icon: 'sun' },
+  { value: 'standard-medium', title: 'Standard Medium', icon: 'circle' },
+  { value: 'standard-dark', title: 'Standard Dark', icon: 'moon' },
+  // Nature
+  { value: 'nature-light', title: 'Nature Light', icon: 'circle' },
+  { value: 'nature-medium', title: 'Nature Medium', icon: 'circle' },
+  { value: 'nature-dark', title: 'Nature Dark', icon: 'circle' },
+  // Sunset
+  { value: 'sunset-light', title: 'Sunset Light', icon: 'circle' },
+  { value: 'sunset-medium', title: 'Sunset Medium', icon: 'circle' },
+  { value: 'sunset-dark', title: 'Sunset Dark', icon: 'circle' },
+  // Ocean
+  { value: 'ocean-light', title: 'Ocean Light', icon: 'circle' },
+  { value: 'ocean-medium', title: 'Ocean Medium', icon: 'circle' },
+  { value: 'ocean-dark', title: 'Ocean Dark', icon: 'circle' },
+];
 
 const preview: Preview = {
   parameters: {
@@ -17,26 +41,18 @@ const preview: Preview = {
       defaultValue: 'standard-light',
       toolbar: {
         icon: 'circlehollow',
-        items: [
-          { value: 'standard-light', icon: 'sun', title: 'Standard Light' },
-          { value: 'standard-dark', icon: 'moon', title: 'Standard Dark' },
-          { value: 'sepia-light', icon: 'eye', title: 'Sepia Light' },
-          { value: 'sepia-dark', icon: 'eyeclose', title: 'Sepia Dark' },
-          { value: 'ocean-light', icon: 'waterdrop', title: 'Ocean Light' },
-          { value: 'ocean-dark', icon: 'droplet', title: 'Ocean Dark' },
-        ],
+        items: themeOptions,
         showName: true,
       },
     },
   },
   decorators: [
     (Story, context) => {
-      const theme = context.globals.theme || 'light';
-      return (
-        <div id="root" data-theme={theme}>
-          <Story />
-        </div>
-      );
+      const theme = (context.globals.theme as ThemeValue) || 'standard-light';
+      React.useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+      }, [theme]);
+      return <Story />;
     },
   ],
 };

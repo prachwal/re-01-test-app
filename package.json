@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
+    "type-check": "tsc --noEmit",
     "docs": "typedoc",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
