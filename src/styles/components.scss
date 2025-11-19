@@ -1,9 +1,11 @@
-// Przyciski
+@use 'variables';
+
+// Przyciski - Mobile First z clamp()
 button {
-  border-radius: 8px;
+  border-radius: variables.$border-radius;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: clamp(0.5em, 2vw, 0.6em) clamp(1em, 3vw, 1.2em);
+  font-size: clamp(0.9em, 2.5vw, 1em);
   font-weight: 500;
   font-family: inherit;
   background-color: var(--app-button-bg);
@@ -26,10 +28,10 @@ button {
   }
 }
 
-// Logo
+// Logo - Mobile First z clamp()
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: clamp(4em, 12vw, 6em);
+  padding: clamp(1em, 3vw, 1.5em);
   will-change: filter;
   transition: filter 300ms ease;
 
@@ -57,12 +59,12 @@ button {
   }
 }
 
-// Karty
+// Karty - Mobile First z clamp()
 .card {
-  padding: 2em;
+  padding: clamp(1.5em, 5vw, 2.5em);
   background-color: var(--app-bg-secondary);
-  border-radius: 12px;
-  margin: 2em auto;
+  border-radius: variables.$border-radius-lg;
+  margin: clamp(1em, 3vw, 2em) auto;
   box-shadow: 0 4px 6px var(--app-shadow);
   transition: all 0.3s ease;
 
@@ -79,12 +81,12 @@ button {
   }
 }
 
-// Selektor motywu
+// Selektor motywu - Mobile First z clamp()
 .theme-selector {
-  margin: 2em 0;
-  padding: 1.5em;
+  margin: clamp(1em, 3vw, 2em) 0;
+  padding: clamp(1em, 3vw, 1.5em);
   background-color: var(--app-bg-secondary);
-  border-radius: 8px;
+  border-radius: variables.$border-radius;
   border: 1px solid var(--app-border);
 
   label {
@@ -95,12 +97,12 @@ button {
   }
 
   select {
-    padding: 0.5em 1em;
+    padding: clamp(0.4em, 2vw, 0.5em) clamp(0.8em, 2.5vw, 1em);
     border-radius: 6px;
     border: 1px solid var(--app-border);
     background-color: var(--app-bg-elevated);
     color: var(--app-text-primary);
-    font-size: 1em;
+    font-size: clamp(0.9em, 2.5vw, 1em);
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -115,9 +117,9 @@ button {
   }
 }
 
-// Stopka
+// Stopka - Mobile First z clamp()
 .read-the-docs {
   color: var(--app-text-secondary);
-  margin-top: 2em;
-  font-size: 0.9em;
+  margin-top: clamp(1em, 3vw, 2em);
+  font-size: clamp(0.8em, 2vw, 0.9em);
 }

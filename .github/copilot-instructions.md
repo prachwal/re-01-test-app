@@ -24,6 +24,7 @@ Project uses Vite for fast development (HMR) and build optimization. Base path s
 - **Configuration**: Test config extends Vite config in `vitest.config.ts`. Base path in `vite.config.ts` for Pages.
 - **File Structure**: Source in `src/`, config files at root. No complex folder structure yet.
 - **Dependencies**: Minimal; add to devDependencies for tools, dependencies for runtime.
+- **Responsywność**: Zawsze używaj funkcji CSS `clamp()` dla płynnego skalowania wartości (np. rozmiary, padding, font-size) zamiast sztywnych media queries, aby zapewnić lepszą adaptację na różnych urządzeniach i płynne przejścia.
 
 ## Integration Points
 

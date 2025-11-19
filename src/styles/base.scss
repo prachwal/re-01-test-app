@@ -1,28 +1,13 @@
 @use 'themes';
+@use 'variables';
 
 // Podstawowe style dla :root
 :root {
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-
   // Domyślny motyw (dark)
   @include themes.set-theme(standard, dark);
 
   color: var(--app-text-primary);
   background-color: var(--app-bg-primary);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 // Preferencja systemowa dla jasnego motywu
@@ -42,26 +27,43 @@
 }
 
 body {
-  margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-synthesis: none;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
   min-height: 100vh;
-  background-color: var(--app-bg-primary);
+  min-width: variables.$min-width-mobile;
+  place-items: center;
+  text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
-// Layout
+// Layout - Mobile First z clamp()
 #root {
-  max-width: 1280px;
+  max-width: clamp(
+    variables.$min-width-mobile,
+    90vw,
+    variables.$max-width-large
+  );
   margin: 0 auto;
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   text-align: center;
 }
 
-// Typografia
+// Typografia - Mobile First z clamp()
 h1 {
-  font-size: 3.2em;
+  font-size: clamp(2.2em, 8vw, 3.2em);
   line-height: 1.1;
   color: var(--app-heading);
   margin: 0.5em 0;
