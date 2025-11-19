@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 // Polyfill for window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
