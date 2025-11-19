@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 import App from '@/components/App';
 
 const mockRender = vi.fn();
@@ -31,7 +33,9 @@ describe('main.tsx', () => {
     expect(mockCreateRoot).toHaveBeenCalledWith(rootElement);
     expect(mockRender).toHaveBeenCalledWith(
       <React.StrictMode>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </React.StrictMode>
     );
   });

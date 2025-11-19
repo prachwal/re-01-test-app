@@ -1,43 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setTheme } from '@/store/slices/themeSlice';
+import type { RootState, AppDispatch } from '@/store';
 import type { ThemeValue } from './types';
 
 /**
- * Hook do zarządzania licznikiem.
+ * Hook do zarządzania stanem aplikacji z Redux.
  */
-export function useCounter(initialValue: number = 0) {
-  const [count, setCount] = useState(initialValue);
-  return { count, setCount };
-}
-
-/**
- * Hook do zarządzania motywem aplikacji.
- */
-export function useTheme() {
-  const [theme, setTheme] = useState<ThemeValue>(() => {
-    // Sprawdź zapisany motyw w localStorage
-    const savedTheme = localStorage.getItem('app-theme') as ThemeValue | null;
-    if (savedTheme) {
-      return savedTheme;
-    }
-
-    // Sprawdź preferencję systemową
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
-    return prefersDark ? 'standard-dark' : 'standard-light';
-  });
-
-  useEffect(() => {
-    // Ustaw atrybut data-theme na elemencie HTML
-    document.documentElement.setAttribute('data-theme', theme);
-
-    // Zapisz wybrany motyw w localStorage
-    localStorage.setItem('app-theme', theme);
-  }, [theme]);
+export function useAppState() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const theme = useSelector((state: RootState) => state.theme.currentTheme);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     // Obserwuj zmiany atrybutu data-theme na elemencie HTML
-    const observer = new MutationObserver((mutations) => {
+    const handleMutation = (mutations: MutationRecord[]) => {
       mutations.forEach((mutation) => {
         if (
           mutation.type === 'attributes' &&
@@ -47,11 +24,13 @@ export function useTheme() {
             'data-theme'
           ) as ThemeValue;
           if (newTheme && newTheme !== theme) {
-            setTheme(newTheme);
+            dispatch(setTheme(newTheme));
           }
         }
       });
-    });
+    };
+
+    const observer = new MutationObserver(handleMutation);
 
     observer.observe(document.documentElement, {
       attributes: true,
@@ -59,12 +38,12 @@ export function useTheme() {
     });
 
     return () => observer.disconnect();
-  }, [theme]);
+  }, [theme, dispatch]);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTheme = event.target.value as ThemeValue;
-    setTheme(selectedTheme);
+    dispatch(setTheme(selectedTheme));
   };
 
-  return { theme, setTheme, handleThemeChange };
+  return { count, theme, dispatch, handleThemeChange };
 }

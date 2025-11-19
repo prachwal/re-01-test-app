@@ -1,10 +1,14 @@
-import { vi } from 'vitest';
-import type { MockedFunction } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { store } from '@/store';
+import counterSlice from '@/store/slices/counterSlice';
+import themeSlice from '@/store/slices/themeSlice';
 import App from '@/components/App';
-import { useCounter, useTheme } from './logic';
+import { useAppState } from './logic';
+import { increment } from '@/store/slices/counterSlice';
 
 // Mock localStorage
 const localStorageMock = {
@@ -32,13 +36,16 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 describe('App', () => {
+  const renderWithProvider = (component: React.ReactElement) =>
+    render(<Provider store={store}>{component}</Provider>);
+
   it('renders headline', () => {
-    render(<App />);
+    renderWithProvider(<App />);
     expect(screen.getByText(/Vite \+ React/)).toBeInTheDocument();
   });
 
   it('renders button and increments count', () => {
-    render(<App />);
+    renderWithProvider(<App />);
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('count is 0');
@@ -48,7 +55,7 @@ describe('App', () => {
   });
 
   it('renders read the docs text', () => {
-    render(<App />);
+    renderWithProvider(<App />);
     expect(
       screen.getByText((content) =>
         content.includes('Click on the Vite and React logos to learn more')
@@ -57,160 +64,51 @@ describe('App', () => {
   });
 });
 
-describe('useCounter', () => {
-  it('initializes with default value 0', () => {
-    const { result } = renderHook(() => useCounter());
-    expect(result.current.count).toBe(0);
-  });
-
-  it('initializes with custom value', () => {
-    const { result } = renderHook(() => useCounter(5));
-    expect(result.current.count).toBe(5);
-  });
-
-  it('increments count', () => {
-    const { result } = renderHook(() => useCounter());
-
-    act(() => {
-      result.current.setCount(1);
+describe('useAppState', () => {
+  const createStore = () =>
+    configureStore({
+      reducer: {
+        counter: counterSlice,
+        theme: themeSlice,
+      },
     });
 
-    expect(result.current.count).toBe(1);
-  });
-});
-
-describe('useTheme', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    localStorageMock.getItem.mockReturnValue(null);
-    (
-      window.matchMedia as MockedFunction<typeof window.matchMedia>
-    ).mockReturnValue({
-      matches: false,
-      media: '',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    });
-  });
-
-  it('initializes with standard-light when no saved theme and light preference', () => {
-    const { result } = renderHook(() => useTheme());
-    expect(result.current.theme).toBe('standard-light');
-  });
-
-  it('initializes with standard-dark when dark preference', () => {
-    (
-      window.matchMedia as MockedFunction<typeof window.matchMedia>
-    ).mockReturnValue({
-      matches: true,
-      media: '',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
+  const renderHookWithProvider = (hook: () => unknown) =>
+    renderHook(hook, {
+      wrapper: ({ children }: { children: React.ReactNode }) => (
+        <Provider store={createStore()}>{children}</Provider>
+      ),
     });
 
-    const { result } = renderHook(() => useTheme());
-    expect(result.current.theme).toBe('standard-dark');
+  it('returns initial count', () => {
+    const { result } = renderHookWithProvider(() => useAppState());
+    expect((result.current as ReturnType<typeof useAppState>).count).toBe(0);
   });
 
-  it('loads saved theme from localStorage', () => {
-    localStorageMock.getItem.mockReturnValue('nature-dark');
-
-    const { result } = renderHook(() => useTheme());
-    expect(result.current.theme).toBe('nature-dark');
-  });
-
-  it('saves theme to localStorage on change', () => {
-    const { result } = renderHook(() => useTheme());
-
-    act(() => {
-      result.current.handleThemeChange({
-        target: { value: 'sunset-medium' },
-      } as React.ChangeEvent<HTMLSelectElement>);
-    });
-
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      'app-theme',
-      'sunset-medium'
-    );
-  });
-});
-
-describe('useTheme', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    localStorageMock.getItem.mockReturnValue(null);
-    (
-      window.matchMedia as MockedFunction<typeof window.matchMedia>
-    ).mockReturnValue({
-      matches: false,
-      media: '',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    });
-  });
-
-  it('initializes with standard-light when no saved theme and light preference', () => {
-    const { result } = renderHook(() => useTheme());
-    expect(result.current.theme).toBe('standard-light');
-  });
-
-  it('initializes with standard-dark when dark preference', () => {
-    (
-      window.matchMedia as MockedFunction<typeof window.matchMedia>
-    ).mockReturnValue({
-      matches: true,
-      media: '',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    });
-
-    const { result } = renderHook(() => useTheme());
-    expect(result.current.theme).toBe('standard-dark');
-  });
-
-  it('loads saved theme from localStorage', () => {
-    localStorageMock.getItem.mockReturnValue('nature-dark');
-
-    const { result } = renderHook(() => useTheme());
-    expect(result.current.theme).toBe('nature-dark');
-  });
-
-  it('saves theme to localStorage on change', () => {
-    const { result } = renderHook(() => useTheme());
-
-    act(() => {
-      result.current.handleThemeChange({
-        target: { value: 'sunset-medium' },
-      } as React.ChangeEvent<HTMLSelectElement>);
-    });
-
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      'app-theme',
-      'sunset-medium'
-    );
-  });
-
-  it('sets data-theme attribute on documentElement', () => {
-    renderHook(() => useTheme());
-
-    expect(document.documentElement.getAttribute('data-theme')).toBe(
+  it('returns initial theme', () => {
+    const { result } = renderHookWithProvider(() => useAppState());
+    expect((result.current as ReturnType<typeof useAppState>).theme).toBe(
       'standard-light'
+    );
+  });
+
+  it('dispatches increment', () => {
+    const { result } = renderHookWithProvider(() => useAppState());
+    act(() => {
+      (result.current as ReturnType<typeof useAppState>).dispatch(increment());
+    });
+    expect((result.current as ReturnType<typeof useAppState>).count).toBe(1);
+  });
+
+  it('handles theme change', () => {
+    const { result } = renderHookWithProvider(() => useAppState());
+    act(() => {
+      (result.current as ReturnType<typeof useAppState>).handleThemeChange({
+        target: { value: 'standard-dark' },
+      } as React.ChangeEvent<HTMLSelectElement>);
+    });
+    expect((result.current as ReturnType<typeof useAppState>).theme).toBe(
+      'standard-dark'
     );
   });
 });

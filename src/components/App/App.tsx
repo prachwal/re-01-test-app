@@ -1,4 +1,5 @@
-import { useCounter, useTheme } from './logic';
+import { useAppState } from './logic';
+import { increment } from '@/store/slices/counterSlice';
 import reactLogo from '@/assets/react.svg';
 import viteLogo from '/vite.svg';
 
@@ -12,8 +13,7 @@ declare const __HAS_STORYBOOK__: boolean;
  * Displays a counter with increment functionality and links to Vite and React documentation.
  */
 function App() {
-  const { count, setCount } = useCounter(0);
-  const { theme, handleThemeChange } = useTheme();
+  const { count, theme, dispatch, handleThemeChange } = useAppState();
 
   return (
     <>
@@ -29,9 +29,7 @@ function App() {
       <h1>Vite + React v{__APP_VERSION__}</h1>
 
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <button onClick={() => dispatch(increment())}>count is {count}</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
