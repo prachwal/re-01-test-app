@@ -111,10 +111,11 @@ The app is automatically deployed to GitHub Pages on pushes to the `main` branch
 ```
 src/
 ├── styles/
-│   ├── themes.scss      # Theme variables, maps, and mixins
-│   ├── base.scss        # Base styles (:root, body, typography, links)
-│   ├── components.scss  # Component styles (buttons, cards, selectors)
-│   └── index.scss       # Main SCSS entry point importing all modules
+│   ├── variables.scss       # Color variables and design tokens
+│   ├── themes.scss          # Theme maps, mixins, and dynamic theme generation
+│   ├── base.scss            # Base styles (:root, body, typography, links)
+│   ├── components.scss      # Component styles (buttons, cards, selectors)
+│   └── index.scss           # Main SCSS entry point importing all modules
 ├── components/
 │   ├── App/
 │   │   ├── App.tsx          # Main component with theme selector
